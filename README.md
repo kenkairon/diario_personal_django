@@ -128,21 +128,52 @@ Educativo y de Aprendizaje Personal
         entries = Entry.objects.order_by("created")
         return render(request, 'diary/entry_list.html', {'entries': entries})
 
-19. hacemos en diary el templates\diary
+19. hacemos en diary el templates\diary\base.html
     ```bash	
+    <!DOCTYPE html>
     <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Mi Diario</title>
+        <title>Document</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     </head>
 
     <body>
-        <h1><a href="">Entradas de Mi Diario Personal</a></h1>
-        {% for entry in entries %}
+        <div class="container">
+            <div class="row text-center mt-4 p-2">
+                <h1><a href="/">Entradas de Mi Diario Personal</a></h1>
+            </div>
+            <div class="row">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
 
-        <h2>{{entry.title}}</h2>
-        {% endfor %}
+
     </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
     </html>
+
+20. templates\diary\entry_list.html
+    ```bash	
+    {% extends 'diary/base.html' %}
+    {% block content %}
+
+    <div class="grid">
+        <ul class="list-group">
+            {% for entry in entries %}
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{entry.title}}</h5>
+                <small>{{entry.created | date:'Y-m-d H:i'}}</small>
+            </div>
+            {% endfor %}
+        </ul>
+
+    </div>
+    {% endblock %}

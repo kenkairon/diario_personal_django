@@ -1,17 +1,15 @@
-<html lang="en">
+{% extends 'diary/base.html' %}
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Diario</title>
-</head>
+<div class="grid">
+    <ul class="list-group">
+        {% for entry in entries %}
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{entry.title}}</h5>
+            <small>{{entry.created | date:'Y-m-d H:i'}}</small>
+        </div>
+        {% endfor %}
+    </ul>
 
-<body>
-    <h1><a href="">Entradas de Mi Diario Personal</a></h1>
-    {% for entry in entries %}
-
-    <h2>{{entry.title}}</h2>
-    {% endfor %}
-</body>
-
-</html>
+</div>
+{% endblock %}

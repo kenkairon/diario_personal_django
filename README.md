@@ -190,22 +190,17 @@ Educativo y de Aprendizaje Personal
 
     </div>
     {% endblock %}
-22. templates\diary\entry_list.html
+22. templates\diary\entry_detail.html
     ```bash
     {% extends 'diary/base.html' %}
+
     {% block content %}
-
-    <div class="grid">
-        <ul class="list-group">
-            {% for entry in entries %}
-            <a href="{%  url 'entry-detail' entry.id %}" class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">{{entry.title}}</h5>
-                    <small>{{entry.created | date:'Y-m-d H:i'}}</small>
-                </div>
-            </a>
-            {% endfor %}
-        </ul>
-
+    <div class="grid p-5 bg-body-tertiary rounded-3">
+        <div class="container-fluid py-3">
+            <h1 class="display-5 fw-bold">{{entry.title}}</h1>
+            <small class="bg-secondary-subtle"><em>Creada: {{entry.created}}</em></small>
+            <p>{{entry.content}}</p>
+        </div>
     </div>
+
     {% endblock %}

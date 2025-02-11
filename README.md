@@ -118,17 +118,30 @@ Educativo y de Aprendizaje Personal
         path('',include('diary.urls')),
     ]
 
-18. Creamos las views en diary/views.py
+18. Creamos las urls en diary/urls.py
     ```bash	
-    from django.shortcuts import render
+    from django.urls import path
+    from . import views
+    urlpatterns = [
+        path('', views.entry_list, name='entry-list'),
+        path('', views.entry_detail, name='entry-detail'),
+    ]
+19. Creamos las views en diary/views.py
+    ```bash	
+    from django.shortcuts import render, get_object_or_404
     from .models import Entry
+
 
     # Create your views here.
     def entry_list(request):
         entries = Entry.objects.order_by("created")
         return render(request, 'diary/entry_list.html', {'entries': entries})
 
-19. hacemos en diary el templates\diary\base.html
+    def entry_detail(request, id):
+        entry = get_object_or_404(Entry, id=id)
+        return render(request,  'diary/entry_detail.html', {'entry': entry})
+
+20. hacemos en diary el templates\diary\base.html
     ```bash	
     <!DOCTYPE html>
     <html lang="en">
@@ -160,7 +173,7 @@ Educativo y de Aprendizaje Personal
 
     </html>
 
-20. templates\diary\entry_list.html
+21. templates\diary\entry_list.html
     ```bash	
     {% extends 'diary/base.html' %}
     {% block content %}
@@ -172,6 +185,25 @@ Educativo y de Aprendizaje Personal
                 <h5 class="mb-1">{{entry.title}}</h5>
                 <small>{{entry.created | date:'Y-m-d H:i'}}</small>
             </div>
+            {% endfor %}
+        </ul>
+
+    </div>
+    {% endblock %}
+22. templates\diary\entry_list.html
+    ```bash
+    {% extends 'diary/base.html' %}
+    {% block content %}
+
+    <div class="grid">
+        <ul class="list-group">
+            {% for entry in entries %}
+            <a href="{%  url 'entry-detail' entry.id %}" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{entry.title}}</h5>
+                    <small>{{entry.created | date:'Y-m-d H:i'}}</small>
+                </div>
+            </a>
             {% endfor %}
         </ul>
 

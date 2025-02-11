@@ -4,10 +4,12 @@
 <div class="grid">
     <ul class="list-group">
         {% for entry in entries %}
-        <div class="d-flex w-100 justify-content-between">
-            <h5 class="mb-1">{{entry.title}}</h5>
-            <small>{{entry.created | date:'Y-m-d H:i'}}</small>
-        </div>
+        <a href="{%  url 'entry-detail' entry.id %}" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1">{{entry.title}}</h5>
+                <small>{{entry.created | date:'Y-m-d H:i'}}</small>
+            </div>
+        </a>
         {% endfor %}
     </ul>
 
